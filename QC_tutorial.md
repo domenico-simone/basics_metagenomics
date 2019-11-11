@@ -16,6 +16,8 @@
 
 ## A little warning before starting
 
+This tutorial has been crafted to give you the opportunity to copy/paste commands as much as possible, in order to get a bit familiar with the command line without getting mad about it! This said, **please check every block of code** you're going to run, since some lines **need** to be customized.
+
 ## Create personal folder and copy (link) data 
 
 This is your safe space where you'll perform your analyses (related to ALL tutorials) without interfering with your classmates. We **softlink** the data without creating actual copies - although we have 2TB of storage in the course project on UPPMAX, it's good practice to save space whenever possible :-).
