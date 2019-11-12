@@ -89,7 +89,6 @@ cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial/raw_data
 
 #Here starts the heredoc
 
-#sbatch -p core -t 1:00:00 -A g2019027 --reservation=g2019027_1 \
 sbatch -p core -t 1:00:00 --reservation=g2019027_12 -A g2019027 \
 --array=1-$(wc -l < datasets) -J trimmomatic<<'EOF'
 #!/bin/sh
