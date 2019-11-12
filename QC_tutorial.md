@@ -25,12 +25,12 @@ This is your safe space where you'll perform your analyses (related to ALL tutor
 **Note**: replace `YOURNAME` with your name through this tutorial.
 
 ```bash
-cd /proj/g2019027/2019_MG_course/student_folders
+cd /proj/g2019027/2019_MG_course/students_folders
 mkdir -p YOURNAME/qc_tutorial
 cd YOURNAME/qc_tutorial
 
 mkdir raw_data && cd raw_data
-ln -sf /proj/g2019027/2019_MG_course/qc_tutorial/*.*.fastq.gz .
+ln -sf /proj/g2019027/2019_MG_course/qc_tutorial/raw_data/*.*.fastq.gz .
 ```
 
 ## FastQC on raw data
@@ -39,7 +39,7 @@ FastQC is not multithreaded, but it can process as many files at the same time a
 
 ```bash
 # go to working directory
-cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial
+cd /proj/g2019027/2019_MG_course/students_folders/YOURNAME/qc_tutorial
 
 # start interactive session on UPPMAX
 interactive -p core -n 16 -t 1:00:00 --reservation=g2019027_12 -A g2019027 
@@ -65,7 +65,7 @@ What would you do with your results now? You have 16 x 2 = 32 results to go thro
 
 ```bash
 # go to working directory
-cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial
+cd /proj/g2019027/2019_MG_course/students_folders/YOURNAME/qc_tutorial
 
 # load MultiQC
 module load MultiQC/1.0
@@ -85,7 +85,7 @@ The command to be run is not contained in a script, but it's encapsulated in a s
 
 ```bash
 # go to working directory
-cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial/raw_data
+cd /proj/g2019027/2019_MG_course/students_folders/YOURNAME/qc_tutorial/raw_data
 
 #Here starts the heredoc
 
@@ -126,7 +126,7 @@ Now the `logs` directory includes also the Trimmomatic reports. What happens if 
 
 ```bash
 # go to log directory
-cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial/logs
+cd /proj/g2019027/2019_MG_course/students_folders/YOURNAME/qc_tutorial/logs
 
 module load MultiQC/1.0
 
@@ -144,7 +144,7 @@ Let's run FastQC on filtered data.
 interactive -p core -n 16 -t 1:00:00 --reservation=g2019027_12 -A g2019027
 
 # go to working directory
-cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial/processed_data
+cd /proj/g2019027/2019_MG_course/students_folders/YOURNAME/qc_tutorial/processed_data
 
 module load bioinfo-tools
 module load FastQC
@@ -212,7 +212,7 @@ EOF
 Compare signatures!
 
 ```bash
-cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial/signatures
+cd /proj/g2019027/2019_MG_course/students_folders/YOURNAME/qc_tutorial/signatures
 
 $HOME/.local/bin/sourmash compare -k 31 *.sig -o biofilm_cmp
 $HOME/.local/bin/sourmash plot --pdf --labels biofilm_cmp
