@@ -42,7 +42,7 @@ FastQC is not multithreaded, but it can process as many files at the same time a
 cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial
 
 # start interactive session on UPPMAX
-interactive -p core -n 16 -t 1:00:00 --reservation=g2019027_<day>
+interactive -p core -n 16 -t 1:00:00 --reservation=g2019027_12 -A g2019027 
 
 # create output directories
 mkdir -p fastqc_raw
@@ -61,7 +61,7 @@ cp ../fastqc_raw/*_fastqc.zip ../logs
 
 ## Aggregate FastQC reports with MultiQC
 
-What would you do with your results now? You have 16 x 2 = 32 results to go through. You could open them one by one, or find a way to display all of them at once. **MultiQC** is a tool capable of parsing outputs and logs of a plethora of tools (not only QC-related) and collapse them to make easier to get an overview of results from multiple datasets. During this tutorial, we'll use this tool three times to collapse reports from FastQC and quality filtering stats. To this purpose, we create a folder `logs` where we'll copy FastQC reports and Trimmomatic logs.
+What would you do with your results now? You have 16 x 2 = 32 results to go through. You could open them one by one, or find a way to display all of them at once. **MultiQC** is a tool capable of parsing outputs and logs of a plethora of tools (not only QC-related) and collapse them to make easier to get an overview of results from multiple datasets. During this tutorial, we'll use this tool three times to collapse reports from FastQC and quality filtering stats. To this purpose, we have created a folder `logs` where we'll copy FastQC reports and Trimmomatic logs.
 
 ```bash
 # go to working directory
@@ -87,8 +87,10 @@ The command to be run is not contained in a script, but it's encapsulated in a s
 # go to working directory
 cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial/raw_data
 
+#Here starts the heredoc
+
 #sbatch -p core -t 1:00:00 -A g2019027 --reservation=g2019027_1 \
-sbatch -p core -t 1:00:00 -A snic2018-8-310 \
+sbatch -p core -t 1:00:00 --reservation=g2019027_12 -A g2019027 \
 --array=1-$(wc -l < datasets) -J trimmomatic<<'EOF'
 #!/bin/sh
 
@@ -140,7 +142,7 @@ Let's run FastQC on filtered data.
 
 ```bash
 #interactive -p core -n 16 -t 1:00:00 --reservation=g2019027_<day>
-interactive -p core -n 16 -t 1:00:00 -A snic2018-8-310
+interactive -p core -n 16 -t 1:00:00 --reservation=g2019027_12 -A g2019027
 
 # go to working directory
 cd /proj/g2019027/2019_MG_course/student_folders/YOURNAME/qc_tutorial/processed_data
@@ -152,8 +154,8 @@ module load FastQC
 mkdir -p ../fastqc_processed
 
 fastqc \
--o ../fastqc_processed/ \ # output folder
--t 16 \ # how many samples to run at the same time?
+-o ../fastqc_processed/ \
+-t 16 \
 $(ls ????_?.R*.trim.fastq.gz) # list of input files 
 
 # copy logs/outputs in appropriate folder
@@ -163,7 +165,7 @@ cp ../fastqc_processed/*_fastqc.zip ../logs
 
 ## Aggregate Trimmomatic, raw/processed FastQC reports with MultiQC
 
-Let's aggregate everything for the boss' entertainment! 
+Let's aggregate everything! What are your comments about the datasets and their processing?
 
 ```bash
 module load MultiQC/1.0
@@ -191,7 +193,7 @@ Create signatures for each metagenome
 mkdir -p signatures
 cd processed_data
 
-sbatch -p core -t 30:00 -A snic2018-8-310 \
+sbatch -p core -t 30:00 --reservation=g2019027_12 -A g2019027 \
 --array=1-$(wc -l < ../raw_data/datasets) -J sourmash<<'EOF'
 #!/bin/sh
 
@@ -217,7 +219,7 @@ $HOME/.local/bin/sourmash compare -k 31 *.sig -o biofilm_cmp
 $HOME/.local/bin/sourmash plot --pdf --labels biofilm_cmp
 ```
 
-Display the distance matrix + dendrogram
+Display the distance matrix + dendrogram. Is the sample clustering expected? 
 
 ```bash
 firefox biofilm_cmp.matrix.pdf
