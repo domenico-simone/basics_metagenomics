@@ -31,6 +31,7 @@ cd YOURNAME/qc_tutorial
 
 mkdir raw_data && cd raw_data
 ln -sf /proj/g2019027/2019_MG_course/qc_tutorial/raw_data/*.*.fastq.gz .
+cp /proj/g2019027/2019_MG_course/qc_tutorial/raw_data/datasets .
 ```
 
 ## FastQC on raw data
